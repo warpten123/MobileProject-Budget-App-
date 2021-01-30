@@ -1,3 +1,5 @@
+import 'package:budget_app/screens/chart.dart';
+import 'package:budget_app/screens/userdata.dart';
 import 'package:flutter/material.dart';
 
 class Budget extends StatefulWidget {
@@ -9,9 +11,14 @@ class Budget extends StatefulWidget {
 }
 
 class _Budget extends State<Budget> {
+  List<UserData> _userTransactions = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => null,
+      ),
       appBar: AppBar(
         title: Text(
           widget.title,
@@ -19,18 +26,17 @@ class _Budget extends State<Budget> {
             fontFamily: 'Gotham',
           ),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => null,
+          ),
+        ],
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Hello',
-              style: TextStyle(
-                fontFamily: 'Gotham',
-                fontSize: 36.0,
-              ),
-            )
+            ChartList(_userTransactions),
           ],
         ),
       ),
