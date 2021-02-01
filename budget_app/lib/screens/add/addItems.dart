@@ -1,0 +1,1 @@
+//to put the transactions from the second page || your expense on that kind of category
