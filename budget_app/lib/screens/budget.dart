@@ -1,6 +1,8 @@
-import 'package:budget_app/screens/addCategoryAndItems.dart';
-import 'package:budget_app/screens/data.dart';
+import 'package:budget_app/screens/add/addCategory.dart';
 import 'package:budget_app/screens/chart.dart';
+import 'package:budget_app/screens/list/categoryList.dart';
+import 'package:budget_app/screens/models/budgetData.dart';
+import 'package:budget_app/screens/models/userData.dart';
 import 'package:flutter/material.dart';
 
 class Budget extends StatefulWidget {
@@ -17,11 +19,15 @@ class _Budget extends State<Budget> {
 
   void categoryBottomSheet(BuildContext context) {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         builder: (context) {
-          return Container(
-            child: AddCategory(addCategory),
-            height: 250,
+          return Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              child: AddCategory(addCategory),
+              height: 250,
+            ),
           );
         });
   }
@@ -46,9 +52,7 @@ class _Budget extends State<Budget> {
       appBar: AppBar(
         title: Text(
           widget.title,
-          style: TextStyle(
-            fontFamily: 'Gotham',
-          ),
+          style: Theme.of(context).textTheme.headline4,
         ),
         actions: <Widget>[
           IconButton(
@@ -57,10 +61,11 @@ class _Budget extends State<Budget> {
           ),
         ],
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             ChartList(_userTransactions),
+            CategoryList(_category),
           ],
         ),
       ),

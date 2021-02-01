@@ -1,4 +1,4 @@
-import 'package:budget_app/screens/data.dart';
+import 'package:budget_app/screens/models/userData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,6 +17,7 @@ class BarChartWidget extends StatelessWidget {
           child: Text(
             '₱ $amount',
             style: TextStyle(
+              fontSize: 14.0,
               fontFamily: 'Gotham',
             ),
           ),
@@ -54,10 +55,7 @@ class BarChartWidget extends StatelessWidget {
         ),
         Text(
           '$day',
-          style: TextStyle(
-            fontFamily: 'Gotham',
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 14.0,fontFamily: 'Gotham', fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -107,11 +105,7 @@ class ChartList extends StatelessWidget {
             ),
             Text(
               'Weekly Spendings',
-              style: TextStyle(
-                fontFamily: 'Gotham',
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold
-              ),
+              style: Theme.of(context).textTheme.headline5,
             ),
             SizedBox(
               height: 5.0,
@@ -125,10 +119,7 @@ class ChartList extends StatelessWidget {
                 ),
                 Text(
                   '_Date1 - _Date2',
-                  style: TextStyle(
-                    fontFamily: 'Gotham',
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
                 IconButton(
                   icon: Icon(Icons.arrow_forward),

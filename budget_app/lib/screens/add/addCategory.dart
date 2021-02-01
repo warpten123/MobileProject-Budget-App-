@@ -21,7 +21,7 @@ class _AddCategory extends State<AddCategory> {
           children: <Widget>[
             TextField(
               controller: _categoryInput,
-              style: TextStyle(fontFamily: 'Gotham'),
+              style: Theme.of(context).textTheme.bodyText2,
               decoration: InputDecoration(
                 labelText: 'Category',
               ),
@@ -29,7 +29,7 @@ class _AddCategory extends State<AddCategory> {
             TextField(
               keyboardType: TextInputType.number,
               controller: _limitInput,
-              style: TextStyle(fontFamily: 'Gotham'),
+              style: Theme.of(context).textTheme.bodyText2,
               decoration: InputDecoration(
                 labelText: 'Budget Limit',
               ),
@@ -39,9 +39,7 @@ class _AddCategory extends State<AddCategory> {
               child: FlatButton(
                 child: Text(
                   'Add Category',
-                  style: TextStyle(
-                    fontFamily: 'Gotham',
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 onPressed: () {
                   if (_categoryInput.text.isEmpty || _limitInput.text.isEmpty) {
@@ -50,14 +48,14 @@ class _AddCategory extends State<AddCategory> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text('Error',
-                                style: TextStyle(fontFamily: 'Gotham')),
+                                style: Theme.of(context).textTheme.bodyText2),
                             content: Text('Invalid Input',
-                                style: TextStyle(fontFamily: 'Gotham')),
+                                style: Theme.of(context).textTheme.bodyText2),
                             actions: [
                               FlatButton(
                                 child: Text(
                                   'OK',
-                                  style: TextStyle(fontFamily: 'Gotham'),
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
                                 onPressed: () {
                                   Navigator.of(context).pop('dialog');
@@ -67,6 +65,11 @@ class _AddCategory extends State<AddCategory> {
                           );
                         });
                   }
+                  else {
+                  widget.category(
+                      _categoryInput.text, double.parse(_limitInput.text));
+                  Navigator.of(context).pop();
+                }
                 },
               ),
             ),
