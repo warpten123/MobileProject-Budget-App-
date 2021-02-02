@@ -19,6 +19,10 @@ class _AddItem extends State<AddItem> {
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: <Widget>[
+            Text(
+              "Add Item",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             TextField(
               controller: _itemInput,
               style: Theme.of(context).textTheme.bodyText2,

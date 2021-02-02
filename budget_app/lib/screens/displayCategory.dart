@@ -45,6 +45,14 @@ class _DisplayCategory extends State<DisplayCategory> {
     });
   }
 
+  double totalItems() {
+    double totalValue = 0;
+    for (int i = 0; i < _item.length; i++) {
+      totalValue += _item[i].itemValue;
+    }
+    return totalValue;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -122,7 +130,8 @@ class _DisplayCategory extends State<DisplayCategory> {
                               height: circleSize - 40.0,
                               child: Center(
                                 child: Text(
-                                  " / ${widget.categoryInfo.budgetLimit}",
+                                  totalItems().toString() +
+                                      " / ${widget.categoryInfo.budgetLimit}",
                                   style: TextStyle(fontSize: 20.0),
                                 ),
                               ),
