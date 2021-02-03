@@ -2,7 +2,7 @@ import 'package:budget_app/screens/add/addCategory.dart';
 import 'package:budget_app/screens/chart.dart';
 import 'package:budget_app/screens/list/categoryList.dart';
 import 'package:budget_app/screens/models/budgetData.dart';
-import 'package:budget_app/screens/models/userData.dart';
+import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 
 class Budget extends StatefulWidget {
@@ -14,7 +14,7 @@ class Budget extends StatefulWidget {
 }
 
 class _Budget extends State<Budget> {
-  List<UserData> _userTransactions = [];
+  List<ItemData> _userTransactions = [];
   List<BudgetData> _category = [];
 
   void categoryBottomSheet(BuildContext context) {
@@ -35,9 +35,7 @@ class _Budget extends State<Budget> {
 
   void addCategory(String text, double amount) {
     final BudgetData category = BudgetData(
-      budgetTitle: text,
-      budgetLimit: amount,
-    );
+        budgetTitle: text, budgetLimit: amount, id: _category.length);
     setState(() {
       _category.add(category);
     });
@@ -65,8 +63,8 @@ class _Budget extends State<Budget> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            ChartList(_userTransactions),
-            CategoryList(_category),
+            // ChartList(_userTransactions),
+            CategoryList(_category, _userTransactions),
           ],
         ),
       ),

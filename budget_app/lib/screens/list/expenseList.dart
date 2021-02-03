@@ -1,10 +1,11 @@
-import 'package:budget_app/screens/displayCategory.dart';
+import 'package:budget_app/screens/models/budgetData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 
 class ItemList extends StatelessWidget {
-  ItemList(this.itemList);
+  ItemList(this.itemList, this.categoryInfo);
   final List<ItemData> itemList;
+  final BudgetData categoryInfo;
 
   @override
   Widget build(BuildContext context) {

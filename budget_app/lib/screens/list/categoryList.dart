@@ -1,10 +1,12 @@
 import 'package:budget_app/screens/displayCategory.dart';
 import 'package:budget_app/screens/models/budgetData.dart';
+import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 
 class CategoryList extends StatelessWidget {
-  CategoryList(this.categoryList);
+  CategoryList(this.categoryList, this.itemInfo);
   final List<BudgetData> categoryList;
+  final List<ItemData> itemInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class CategoryList extends StatelessWidget {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => DisplayCategory(
                                 categoryInfo: categoryList[index],
+                                itemInfoMaster: itemInfo,
                               )));
                     },
                     child: Card(
@@ -42,14 +45,21 @@ class CategoryList extends StatelessWidget {
                         trailing: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: FittedBox(
-                            child: Text(
-                              '₱ ' +
-                                  "0 " +
-                                  '/ ${categoryList[index].budgetLimit}',
-                              style: TextStyle(
-                                  fontSize: 15.0, fontFamily: 'Gotham'),
-                            ),
-                          ),
+                              child: itemInfo.isEmpty
+                                  ? Text(
+                                      '₱ ' +
+                                          "0 " +
+                                          '/ ${categoryList[index].budgetLimit}',
+                                      style: TextStyle(
+                                          fontSize: 15.0, fontFamily: 'Gotham'),
+                                    )
+                                  : Text(
+                                      '₱ ' +
+                                          "${categoryList[index].budgetTotal} " +
+                                          '/ ${categoryList[index].budgetLimit}',
+                                      style: TextStyle(
+                                          fontSize: 15.0, fontFamily: 'Gotham'),
+                                    )),
                         ),
                       ),
                     ),
