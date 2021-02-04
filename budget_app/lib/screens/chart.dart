@@ -1,4 +1,4 @@
-import 'package:budget_app/screens/models/userData.dart';
+import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -55,7 +55,10 @@ class BarChartWidget extends StatelessWidget {
         ),
         Text(
           '$day',
-          style: TextStyle(fontSize: 14.0,fontFamily: 'Gotham', fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 14.0,
+              fontFamily: 'Gotham',
+              fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -64,7 +67,7 @@ class BarChartWidget extends StatelessWidget {
 
 class ChartList extends StatelessWidget {
   ChartList(this.userTransactions);
-  final List<UserData> userTransactions;
+  final List<ItemData> userTransactions;
 
   List<Map<String, Object>> get daysList {
     return List.generate(7, (count) {
@@ -75,7 +78,7 @@ class ChartList extends StatelessWidget {
         if (days.year == userTransactions[counter].date.year &&
             days.month == userTransactions[counter].date.month &&
             days.day == userTransactions[counter].date.day) {
-          total += userTransactions[counter].amount;
+          total += userTransactions[counter].itemValue;
         }
       }
 

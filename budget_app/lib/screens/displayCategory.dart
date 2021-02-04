@@ -8,17 +8,15 @@ import 'list/expenseList.dart';
 const TWO_PI = 3.14 * 2;
 
 class DisplayCategory extends StatefulWidget {
-  DisplayCategory({this.categoryInfo, this.itemInfo});
+  DisplayCategory({this.categoryInfo, this.itemInfoMaster});
   final BudgetData categoryInfo;
-  final ItemData itemInfo;
+  final List<ItemData> itemInfoMaster;
 
   @override
   _DisplayCategory createState() => _DisplayCategory();
 }
 
 class _DisplayCategory extends State<DisplayCategory> {
-  List<ItemData> _item = [];
-
   void itemBottomSheet(BuildContext context) {
     showModalBottomSheet(
         isScrollControlled: true,
@@ -39,18 +37,26 @@ class _DisplayCategory extends State<DisplayCategory> {
     final ItemData item = ItemData(
       itemTitle: text,
       itemValue: amount,
+      categoryID: widget.categoryInfo.id,
     );
     setState(() {
-      _item.add(item);
+      widget.itemInfoMaster.add(item);
     });
   }
 
   double totalItems() {
     double totalValue = 0;
-    for (int i = 0; i < _item.length; i++) {
-      totalValue += _item[i].itemValue;
+    for (int i = 0; i < widget.itemInfoMaster.length; i++) {
+      if (widget.itemInfoMaster[i].categoryID == widget.categoryInfo.id)
+        totalValue += widget.itemInfoMaster[i].itemValue;
     }
     return totalValue;
+  }
+
+  double totalUsed() {
+    double totalUsedItems;
+    totalUsedItems = totalItems() / widget.categoryInfo.budgetLimit;
+    return totalUsedItems;
   }
 
   @override
@@ -97,7 +103,7 @@ class _DisplayCategory extends State<DisplayCategory> {
                 ),
                 child: Center(
                     child: TweenAnimationBuilder(
-                  tween: Tween(begin: 0.0, end: 1.0),
+                  tween: Tween(begin: 0.0, end: totalUsed()),
                   duration: Duration(seconds: 4),
                   builder: (context, value, child) {
                     return Container(
@@ -130,9 +136,12 @@ class _DisplayCategory extends State<DisplayCategory> {
                               height: circleSize - 40.0,
                               child: Center(
                                 child: Text(
-                                  totalItems().toString() +
-                                      " / ${widget.categoryInfo.budgetLimit}",
-                                  style: TextStyle(fontSize: 20.0),
+                                  "₱ " +
+                                      totalItems().toString() +
+                                      " / ₱ ${widget.categoryInfo.budgetLimit}",
+                                  style: TextStyle(
+                                    fontSize: 12.0,
+                                  ),
                                 ),
                               ),
                               decoration: BoxDecoration(
@@ -149,7 +158,7 @@ class _DisplayCategory extends State<DisplayCategory> {
               SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    ItemList(_item),
+                    ItemList(widget.itemInfoMaster, widget.categoryInfo),
                   ],
                 ),
               ),
