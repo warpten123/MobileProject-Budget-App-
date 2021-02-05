@@ -19,6 +19,10 @@ class _AddCategory extends State<AddCategory> {
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: <Widget>[
+            Text(
+              "Add Category",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             TextField(
               controller: _categoryInput,
               style: Theme.of(context).textTheme.bodyText2,
@@ -34,11 +38,17 @@ class _AddCategory extends State<AddCategory> {
                 labelText: 'Budget Limit',
               ),
             ),
+            SizedBox(
+              height: 10.0,
+            ),
             Align(
               alignment: Alignment.centerRight,
               child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.black)),
                 child: Text(
-                  'Add Category',
+                  'Add',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 onPressed: () {

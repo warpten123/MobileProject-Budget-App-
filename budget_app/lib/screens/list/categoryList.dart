@@ -1,11 +1,11 @@
 import 'package:budget_app/screens/displayCategory.dart';
-import 'package:budget_app/screens/models/budgetData.dart';
+import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 
 class CategoryList extends StatefulWidget {
   CategoryList(this.categoryList, this.itemInfo);
-  final List<BudgetData> categoryList;
+  final List<CategoryData> categoryList;
   final List<ItemData> itemInfo;
 
   @override
@@ -44,7 +44,7 @@ class _CategoryListState extends State<CategoryList> {
                       elevation: 3,
                       child: ListTile(
                         title: Text(
-                          widget.categoryList[index].budgetTitle,
+                          widget.categoryList[index].categoryTitle,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         trailing: Padding(
@@ -52,8 +52,8 @@ class _CategoryListState extends State<CategoryList> {
                           child: FittedBox(
                               child: Text(
                             '₱ ' +
-                                "${widget.categoryList[index].budgetTotal} " +
-                                '/ ${widget.categoryList[index].budgetLimit}',
+                                "${widget.categoryList[index].categoryTotal} " +
+                                '/ ${widget.categoryList[index].categoryLimit}',
                             style:
                                 TextStyle(fontSize: 15.0, fontFamily: 'Gotham'),
                           )),

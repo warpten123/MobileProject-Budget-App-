@@ -1,5 +1,5 @@
 import 'package:budget_app/screens/add/additems.dart';
-import 'package:budget_app/screens/models/budgetData.dart';
+import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +9,7 @@ const TWO_PI = 3.14 * 2;
 
 class DisplayCategory extends StatefulWidget {
   DisplayCategory({this.categoryInfo, this.itemInfoMaster});
-  final BudgetData categoryInfo;
+  final CategoryData categoryInfo;
   final List<ItemData> itemInfoMaster;
 
   @override
@@ -27,20 +27,21 @@ class _DisplayCategory extends State<DisplayCategory> {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
               child: AddItem(addItem),
-              height: 250,
+              height: 300,
             ),
           );
         });
   }
 
-  void addItem(String text, double amount) {
+  void addItem(String text, double amount, DateTime date) {
     final ItemData item = ItemData(
       itemTitle: text,
       itemValue: amount,
+      date: date,
       categoryID: widget.categoryInfo.id,
     );
     setState(() {
-      if (widget.categoryInfo.budgetLimit > widget.categoryInfo.budgetTotal) {
+      if (widget.categoryInfo.categoryLimit > widget.categoryInfo.categoryTotal) {
         widget.itemInfoMaster.add(item);
       }
     });
@@ -57,7 +58,7 @@ class _DisplayCategory extends State<DisplayCategory> {
 
   double totalUsed() {
     double totalUsedItems;
-    totalUsedItems = totalItems() / widget.categoryInfo.budgetLimit;
+    totalUsedItems = totalItems() / widget.categoryInfo.categoryLimit;
     return totalUsedItems;
   }
 
@@ -66,9 +67,13 @@ class _DisplayCategory extends State<DisplayCategory> {
     Size size = MediaQuery.of(context).size;
     final circleSize = 200.0;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => itemBottomSheet(context),
+      ),
       appBar: AppBar(
         title: Text(
-          widget.categoryInfo.budgetTitle,
+          widget.categoryInfo.categoryTitle,
           style: Theme.of(context).textTheme.headline4,
         ),
         actions: <Widget>[
@@ -140,7 +145,7 @@ class _DisplayCategory extends State<DisplayCategory> {
                                 child: Text(
                                   "₱ " +
                                       totalItems().toString() +
-                                      " / ₱ ${widget.categoryInfo.budgetLimit}",
+                                      " / ₱ ${widget.categoryInfo.categoryLimit}",
                                   style: TextStyle(
                                     fontSize: 12.0,
                                   ),
