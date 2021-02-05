@@ -64,12 +64,11 @@ class _AddCategory extends State<AddCategory> {
                             ],
                           );
                         });
+                  } else {
+                    widget.category(
+                        _categoryInput.text, double.parse(_limitInput.text));
+                    Navigator.of(context).pop();
                   }
-                  else {
-                  widget.category(
-                      _categoryInput.text, double.parse(_limitInput.text));
-                  Navigator.of(context).pop();
-                }
                 },
               ),
             ),
