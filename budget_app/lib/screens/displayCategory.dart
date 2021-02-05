@@ -40,7 +40,9 @@ class _DisplayCategory extends State<DisplayCategory> {
       categoryID: widget.categoryInfo.id,
     );
     setState(() {
-      widget.itemInfoMaster.add(item);
+      if (widget.categoryInfo.budgetLimit > widget.categoryInfo.budgetTotal) {
+        widget.itemInfoMaster.add(item);
+      }
     });
   }
 
@@ -104,7 +106,7 @@ class _DisplayCategory extends State<DisplayCategory> {
                 child: Center(
                     child: TweenAnimationBuilder(
                   tween: Tween(begin: 0.0, end: totalUsed()),
-                  duration: Duration(seconds: 4),
+                  duration: Duration(seconds: 2),
                   builder: (context, value, child) {
                     return Container(
                       width: circleSize,

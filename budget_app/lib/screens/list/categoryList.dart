@@ -3,14 +3,19 @@ import 'package:budget_app/screens/models/budgetData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 
-class CategoryList extends StatelessWidget {
+class CategoryList extends StatefulWidget {
   CategoryList(this.categoryList, this.itemInfo);
   final List<BudgetData> categoryList;
   final List<ItemData> itemInfo;
 
   @override
+  _CategoryListState createState() => _CategoryListState();
+}
+
+class _CategoryListState extends State<CategoryList> {
+  @override
   Widget build(BuildContext context) {
-    return categoryList.isEmpty
+    return widget.categoryList.isEmpty
         ? Column(
             children: <Widget>[
               Padding(
@@ -23,7 +28,7 @@ class CategoryList extends StatelessWidget {
         : Container(
             height: 390,
             child: ListView.builder(
-              itemCount: categoryList.length,
+              itemCount: widget.categoryList.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -31,35 +36,27 @@ class CategoryList extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => DisplayCategory(
-                                categoryInfo: categoryList[index],
-                                itemInfoMaster: itemInfo,
+                                categoryInfo: widget.categoryList[index],
+                                itemInfoMaster: widget.itemInfo,
                               )));
                     },
                     child: Card(
                       elevation: 3,
                       child: ListTile(
                         title: Text(
-                          categoryList[index].budgetTitle,
+                          widget.categoryList[index].budgetTitle,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         trailing: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: FittedBox(
-                              child: itemInfo.isEmpty
-                                  ? Text(
-                                      '₱ ' +
-                                          "0 " +
-                                          '/ ${categoryList[index].budgetLimit}',
-                                      style: TextStyle(
-                                          fontSize: 15.0, fontFamily: 'Gotham'),
-                                    )
-                                  : Text(
-                                      '₱ ' +
-                                          "${categoryList[index].budgetTotal} " +
-                                          '/ ${categoryList[index].budgetLimit}',
-                                      style: TextStyle(
-                                          fontSize: 15.0, fontFamily: 'Gotham'),
-                                    )),
+                              child: Text(
+                            '₱ ' +
+                                "${widget.categoryList[index].budgetTotal} " +
+                                '/ ${widget.categoryList[index].budgetLimit}',
+                            style:
+                                TextStyle(fontSize: 15.0, fontFamily: 'Gotham'),
+                          )),
                         ),
                       ),
                     ),
