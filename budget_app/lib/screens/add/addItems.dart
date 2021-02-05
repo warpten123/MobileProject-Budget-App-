@@ -89,7 +89,7 @@ class _AddItem extends State<AddItem> {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 onPressed: () {
-                  if (_itemInput.text.isEmpty || _limitInput.text.isEmpty) {
+                  if (_itemInput.text.isEmpty || _limitInput.text.isEmpty || _date == null) {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
