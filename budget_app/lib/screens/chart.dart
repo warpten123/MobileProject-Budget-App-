@@ -2,12 +2,17 @@ import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class BarChartWidget extends StatelessWidget {
+class BarChartWidget extends StatefulWidget{
   BarChartWidget({this.day, this.amount, this.percentage});
   final String day;
   final double amount;
   final double percentage;
 
+  @override
+  _BarChartWidget createState() => _BarChartWidget();
+}
+
+class _BarChartWidget extends State<BarChartWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -15,7 +20,7 @@ class BarChartWidget extends StatelessWidget {
       children: <Widget>[
         FittedBox(
           child: Text(
-            '₱ $amount',
+            '₱ ${widget.amount}',
             style: TextStyle(
               fontSize: 14.0,
               fontFamily: 'Gotham',
@@ -36,11 +41,11 @@ class BarChartWidget extends StatelessWidget {
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.red[800],
+                  color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: FractionallySizedBox(
-                  heightFactor: percentage,
+                  heightFactor: widget.percentage,
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0)),
@@ -54,7 +59,7 @@ class BarChartWidget extends StatelessWidget {
           height: 5.0,
         ),
         Text(
-          '$day',
+          '${widget.day}',
           style: TextStyle(
               fontSize: 14.0,
               fontFamily: 'Gotham',
@@ -65,20 +70,25 @@ class BarChartWidget extends StatelessWidget {
   }
 }
 
-class ChartList extends StatelessWidget {
+class ChartList extends StatefulWidget{
   ChartList(this.userTransactions);
   final List<ItemData> userTransactions;
 
+  @override
+  _ChartList createState() => _ChartList();
+}
+
+class _ChartList extends State<ChartList> {
   List<Map<String, Object>> get daysList {
     return List.generate(7, (count) {
       DateTime days = DateTime.now().subtract(Duration(days: count));
       double total = 0.0;
 
-      for (int counter = 0; counter < userTransactions.length; counter++) {
-        if (days.year == userTransactions[counter].date.year &&
-            days.month == userTransactions[counter].date.month &&
-            days.day == userTransactions[counter].date.day) {
-          total += userTransactions[counter].itemValue;
+      for (int counter = 0; counter < widget.userTransactions.length; counter++) {
+        if (days.year == widget.userTransactions[counter].date.year &&
+            days.month == widget.userTransactions[counter].date.month &&
+            days.day == widget.userTransactions[counter].date.day) {
+          total += widget.userTransactions[counter].itemValue;
         }
       }
 
