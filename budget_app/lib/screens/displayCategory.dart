@@ -35,6 +35,7 @@ class _DisplayCategory extends State<DisplayCategory> {
 
   void addItem(String text, double amount, DateTime date) {
     final ItemData item = ItemData(
+      itemID: widget.itemInfoMaster.length,
       itemTitle: text,
       itemValue: amount,
       date: date,

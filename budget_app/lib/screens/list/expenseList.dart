@@ -11,6 +11,14 @@ class ItemList extends StatefulWidget {
 }
 
 class _ItemListState extends State<ItemList> {
+  void deleteUser(int id) {
+    setState(() {
+      widget.itemList.removeWhere((index) {
+        return index.itemID == id;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -41,17 +49,23 @@ class _ItemListState extends State<ItemList> {
                           widget.itemList[index].itemTitle,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
-                        trailing: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: FittedBox(
-                            child: Text(
-                              '- ₱ ' + '${widget.itemList[index].itemValue}',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                fontFamily: 'Gotham',
-                                color: Colors.red,
+                        trailing: FittedBox(
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                '- ₱ ' + '${widget.itemList[index].itemValue}',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontFamily: 'Gotham',
+                                  color: Colors.red,
+                                ),
                               ),
-                            ),
+                              IconButton(
+                                icon: Icon(Icons.delete, color: Colors.red),
+                                onPressed: () =>
+                                    deleteUser(widget.itemList[index].itemID),
+                              ),
+                            ],
                           ),
                         ),
                       ),
