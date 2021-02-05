@@ -1,11 +1,11 @@
-import 'package:budget_app/screens/models/budgetData.dart';
+import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 
 class ItemList extends StatefulWidget {
   ItemList(this.itemList, this.categoryInfo);
   final List<ItemData> itemList;
-  final BudgetData categoryInfo;
+  final CategoryData categoryInfo;
   @override
   _ItemListState createState() => _ItemListState();
 }
