@@ -1,16 +1,16 @@
-import 'package:budget_app/screens/add/additems.dart';
+import 'package:budget_app/screens/add/addItems.dart';
 import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
-
 import 'list/expenseList.dart';
 
 const TWO_PI = 3.14 * 2;
 
 class DisplayCategory extends StatefulWidget {
-  DisplayCategory({this.categoryInfo, this.itemInfoMaster});
+  DisplayCategory({this.categoryInfo, this.itemInfoMaster, this.notifyParent});
   final CategoryData categoryInfo;
   final List<ItemData> itemInfoMaster;
+  final Function() notifyParent;
 
   @override
   _DisplayCategory createState() => _DisplayCategory();
@@ -42,8 +42,11 @@ class _DisplayCategory extends State<DisplayCategory> {
       categoryID: widget.categoryInfo.id,
     );
     setState(() {
-      if (widget.categoryInfo.categoryLimit > widget.categoryInfo.categoryTotal) {
+      if (widget.categoryInfo.categoryLimit >=
+          widget.categoryInfo.categoryTotal) {
         widget.itemInfoMaster.add(item);
+        widget.categoryInfo.categoryTotal += amount;
+        widget.notifyParent();
       }
     });
   }
@@ -112,7 +115,7 @@ class _DisplayCategory extends State<DisplayCategory> {
                 child: Center(
                     child: TweenAnimationBuilder(
                   tween: Tween(begin: 0.0, end: totalUsed()),
-                  duration: Duration(seconds: 2),
+                  duration: Duration(seconds: 1),
                   builder: (context, value, child) {
                     return Container(
                       width: circleSize,

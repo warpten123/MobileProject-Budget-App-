@@ -13,6 +13,10 @@ class CategoryList extends StatefulWidget {
 }
 
 class _CategoryListState extends State<CategoryList> {
+  refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return widget.categoryList.isEmpty
@@ -38,6 +42,7 @@ class _CategoryListState extends State<CategoryList> {
                           builder: (context) => DisplayCategory(
                                 categoryInfo: widget.categoryList[index],
                                 itemInfoMaster: widget.itemInfo,
+                                notifyParent: refresh,
                               )));
                     },
                     child: Card(

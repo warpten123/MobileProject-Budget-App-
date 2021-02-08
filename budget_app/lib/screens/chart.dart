@@ -2,7 +2,7 @@ import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class BarChartWidget extends StatefulWidget{
+class BarChartWidget extends StatefulWidget {
   BarChartWidget({this.day, this.amount, this.percentage});
   final String day;
   final double amount;
@@ -70,7 +70,7 @@ class _BarChartWidget extends State<BarChartWidget> {
   }
 }
 
-class ChartList extends StatefulWidget{
+class ChartList extends StatefulWidget {
   ChartList(this.userTransactions);
   final List<ItemData> userTransactions;
 
@@ -84,7 +84,9 @@ class _ChartList extends State<ChartList> {
       DateTime days = DateTime.now().subtract(Duration(days: count));
       double total = 0.0;
 
-      for (int counter = 0; counter < widget.userTransactions.length; counter++) {
+      for (int counter = 0;
+          counter < widget.userTransactions.length;
+          counter++) {
         if (days.year == widget.userTransactions[counter].date.year &&
             days.month == widget.userTransactions[counter].date.month &&
             days.day == widget.userTransactions[counter].date.day) {

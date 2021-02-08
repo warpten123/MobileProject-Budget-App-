@@ -1,9 +1,9 @@
 class ItemData {
-  final int itemID;
-  final int categoryID;
-  final String itemTitle;
-  final double itemValue;
-  final DateTime date;
+  int itemID;
+  int categoryID;
+  String itemTitle;
+  double itemValue;
+  DateTime date;
 
   ItemData({
     this.itemID,

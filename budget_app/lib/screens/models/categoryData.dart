@@ -1,8 +1,8 @@
 class CategoryData {
-  final String categoryTitle;
-  final double categoryLimit;
-  final double categoryTotal;
-  final int id;
+  String categoryTitle;
+  double categoryLimit;
+  double categoryTotal;
+  int id;
 
   CategoryData({
     this.id,
