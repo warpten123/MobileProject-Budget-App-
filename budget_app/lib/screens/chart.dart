@@ -79,6 +79,8 @@ class ChartList extends StatefulWidget {
 }
 
 class _ChartList extends State<ChartList> {
+  DateTime now = new DateTime.now();
+
   List<Map<String, Object>> get daysList {
     return List.generate(7, (count) {
       DateTime days = DateTime.now().subtract(Duration(days: count));
@@ -109,6 +111,7 @@ class _ChartList extends State<ChartList> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime week = now.subtract(Duration(days: 7));
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -133,7 +136,9 @@ class _ChartList extends State<ChartList> {
                   onPressed: () => null,
                 ),
                 Text(
-                  '_Date1 - _Date2',
+                  DateFormat.yMMMd().format(week) +
+                      ' - ' +
+                      DateFormat.yMMMd().format(now),
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 IconButton(
