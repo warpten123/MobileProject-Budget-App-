@@ -1,3 +1,4 @@
+import 'package:budget_app/screens/add/edititems.dart';
 import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +12,29 @@ class ItemList extends StatefulWidget {
 }
 
 class _ItemListState extends State<ItemList> {
+  void itemBottomSheet(BuildContext context, int index) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              child: EditItem(
+                widget.categoryInfo,
+                widget.itemList[index],
+              ),
+              height: 300,
+            ),
+          );
+        });
+  }
+
   void deleteUser(int id) {
     setState(() {
       widget.itemList.removeWhere((index) {
+        widget.categoryInfo.categoryTotal -= widget.itemList[id].itemValue;
         return index.itemID == id;
       });
     });
@@ -41,7 +62,7 @@ class _ItemListState extends State<ItemList> {
                 if (widget.itemList[index].categoryID ==
                     widget.categoryInfo.id) {
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(2.0),
                     child: Card(
                       elevation: 3,
                       child: ListTile(
@@ -58,6 +79,15 @@ class _ItemListState extends State<ItemList> {
                                   fontSize: 15.0,
                                   fontFamily: 'Gotham',
                                   color: Colors.red,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: IconButton(
+                                  icon: Icon(Icons.build_circle,
+                                      color: Colors.blue),
+                                  onPressed: () =>
+                                      itemBottomSheet(context, index),
                                 ),
                               ),
                               IconButton(
