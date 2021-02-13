@@ -1,4 +1,5 @@
 import 'package:budget_app/repositories/database.dart';
+import 'package:flutter/cupertino.dart';
 import "package:sqflite/sqflite.dart";
 
 class Repository {
@@ -20,5 +21,10 @@ class Repository {
   insertData(table, data) async {
     var connection = await database;
     return await connection.insert(table, data);
+  }
+
+  readData(table) async {
+    var connection = await database;
+    return await connection.query(table);
   }
 }

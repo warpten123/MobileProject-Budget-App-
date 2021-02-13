@@ -13,7 +13,7 @@ class CategoryData {
 
   Map<String, dynamic> toMap() {
     return ({
-      'item_id': id,
+      'category_id': id,
       'category_title': categoryTitle,
       'category_limit': categoryLimit,
       'category_total': categoryTotal,

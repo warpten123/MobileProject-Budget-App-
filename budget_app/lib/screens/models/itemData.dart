@@ -12,4 +12,14 @@ class ItemData {
     this.categoryID,
     this.date,
   });
+
+  Map<String, dynamic> toMap() {
+    return ({
+      'item_id': itemID,
+      'category_id': categoryID,
+      'item_title': itemTitle,
+      'item_value': itemValue,
+      'item_date': date,
+    });
+  }
 }
