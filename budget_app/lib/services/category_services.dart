@@ -9,6 +9,6 @@ class CategoryService {
   }
 
   saveCategory(CategoryData categoryData) async {
-    return await _repository.insertData('category', data);
+    return await _repository.insertData('category', categoryData.toMap());
   }
 }
