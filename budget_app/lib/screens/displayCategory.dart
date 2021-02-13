@@ -26,7 +26,7 @@ class _DisplayCategory extends State<DisplayCategory> {
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
-              child: AddItem(addItem),
+              child: AddItem(addItem, widget.categoryInfo),
               height: 300,
             ),
           );
@@ -42,12 +42,9 @@ class _DisplayCategory extends State<DisplayCategory> {
       categoryID: widget.categoryInfo.id,
     );
     setState(() {
-      if (widget.categoryInfo.categoryLimit >=
-          widget.categoryInfo.categoryTotal) {
-        widget.itemInfoMaster.add(item);
-        widget.categoryInfo.categoryTotal += amount;
-        widget.notifyParent();
-      }
+      widget.itemInfoMaster.add(item);
+      widget.categoryInfo.categoryTotal += amount;
+      widget.notifyParent();
     });
   }
 
@@ -58,12 +55,6 @@ class _DisplayCategory extends State<DisplayCategory> {
         totalValue += widget.itemInfoMaster[i].itemValue;
     }
     return totalValue;
-  }
-
-  double totalUsed() {
-    double totalUsedItems;
-    totalUsedItems = totalItems() / widget.categoryInfo.categoryLimit;
-    return totalUsedItems;
   }
 
   @override
@@ -114,7 +105,10 @@ class _DisplayCategory extends State<DisplayCategory> {
                 ),
                 child: Center(
                     child: TweenAnimationBuilder(
-                  tween: Tween(begin: 0.0, end: totalUsed()),
+                  tween: Tween(
+                      begin: 0.0,
+                      end: widget.categoryInfo.categoryTotal /
+                          widget.categoryInfo.categoryLimit),
                   duration: Duration(seconds: 1),
                   builder: (context, value, child) {
                     return Container(
@@ -148,7 +142,8 @@ class _DisplayCategory extends State<DisplayCategory> {
                               child: Center(
                                 child: Text(
                                   "₱ " +
-                                      totalItems().toString() +
+                                      widget.categoryInfo.categoryTotal
+                                          .toString() +
                                       " / ₱ ${widget.categoryInfo.categoryLimit}",
                                   style: TextStyle(
                                     fontSize: 12.0,

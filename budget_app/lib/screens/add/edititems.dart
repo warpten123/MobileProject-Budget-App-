@@ -1,20 +1,21 @@
 import 'package:budget_app/screens/models/categoryData.dart';
+import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AddItem extends StatefulWidget {
-  AddItem(
-    this.item,
+class EditItem extends StatefulWidget {
+  EditItem(
     this.categoryChecker,
+    this.itemEdit,
   );
-  final Function item;
   final CategoryData categoryChecker;
+  final ItemData itemEdit;
 
   @override
-  _AddItem createState() => _AddItem();
+  _EditItem createState() => _EditItem();
 }
 
-class _AddItem extends State<AddItem> {
+class _EditItem extends State<EditItem> {
   final _itemInput = TextEditingController(),
       _limitInput = TextEditingController();
   DateTime _date;
@@ -32,6 +33,13 @@ class _AddItem extends State<AddItem> {
     });
   }
 
+  double storeValue() {
+    if (_limitInput.text.isEmpty) {
+      return widget.itemEdit.itemValue;
+    } else
+      return double.parse(_limitInput.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -40,14 +48,14 @@ class _AddItem extends State<AddItem> {
         child: Column(
           children: <Widget>[
             Text(
-              "Add Item",
+              "Edit Item",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             TextField(
               controller: _itemInput,
               style: Theme.of(context).textTheme.bodyText2,
               decoration: InputDecoration(
-                labelText: 'Item',
+                labelText: widget.itemEdit.itemTitle,
               ),
             ),
             TextField(
@@ -55,7 +63,7 @@ class _AddItem extends State<AddItem> {
               controller: _limitInput,
               style: Theme.of(context).textTheme.bodyText2,
               decoration: InputDecoration(
-                labelText: 'Cost',
+                labelText: widget.itemEdit.itemValue.toString(),
               ),
             ),
             Padding(
@@ -65,7 +73,7 @@ class _AddItem extends State<AddItem> {
                   Expanded(
                     child: Text(
                         _date == null
-                            ? 'No Date Chosen'
+                            ? DateFormat.yMMMMd().format(widget.itemEdit.date)
                             : DateFormat.yMMMMd().format(_date),
                         style: Theme.of(context).textTheme.bodyText2),
                   ),
@@ -86,48 +94,22 @@ class _AddItem extends State<AddItem> {
             Align(
               alignment: Alignment.centerRight,
               child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.black)),
-                child: Text(
-                  'Add',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                onPressed: () {
-                  if (_itemInput.text.isEmpty ||
-                      _limitInput.text.isEmpty ||
-                      _date == null ||
-                      widget.categoryChecker.categoryLimit <
-                          (widget.categoryChecker.categoryTotal +
-                              double.parse(_limitInput.text))) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Error',
-                                style: Theme.of(context).textTheme.bodyText2),
-                            content: Text('Invalid Input',
-                                style: Theme.of(context).textTheme.bodyText2),
-                            actions: [
-                              FlatButton(
-                                child: Text(
-                                  'OK',
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop('dialog');
-                                },
-                              ),
-                            ],
-                          );
-                        });
-                  } else {
-                    widget.item(
-                        _itemInput.text, double.parse(_limitInput.text), _date);
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.black)),
+                  child: Text(
+                    'Edit',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  onPressed: () {
+                    if (_itemInput.text.isEmpty) {
+                      _itemInput.text = widget.itemEdit.itemTitle;
+                    }
+                    widget.itemEdit.itemTitle = _itemInput.text;
+                    widget.itemEdit.itemValue = storeValue();
+                    widget.itemEdit.date = _date;
                     Navigator.of(context).pop();
-                  }
-                },
-              ),
+                  }),
             ),
           ],
         ),
