@@ -107,7 +107,11 @@ class _EditItem extends State<EditItem> {
                     }
                     widget.itemEdit.itemTitle = _itemInput.text;
                     widget.itemEdit.itemValue = storeValue();
-                    widget.itemEdit.date = _date;
+                    if (_date == null) {
+                      widget.itemEdit.date = widget.itemEdit.date;
+                    } else {
+                      widget.itemEdit.date = _date;
+                    }
                     Navigator.of(context).pop();
                   }),
             ),
