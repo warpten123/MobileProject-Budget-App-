@@ -40,6 +40,7 @@ class _Budget extends State<Budget> {
             _categoryList.add(
               CategoryData(
                 id: category['category_id'],
+                categoryTotal: category['category_total'],
                 categoryTitle: category['category_title'],
                 categoryLimit: category['category_limit'],
               ),

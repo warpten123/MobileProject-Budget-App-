@@ -38,4 +38,11 @@ class Repository {
     return await connection.rawQuery(
         "SELECT SUM(item_value) FROM items WHERE category_id = $categoryID");
   }
+
+  updateCategoryTotal(categoryID) async {
+    var connection = await database;
+    return await connection.execute(
+        "UPDATE categories SET category_total = (SELECT SUM(item_value) FROM items WHERE item_id = categories.category_id) WHERE EXISTS (SELECT SUM(item_value) FROM items WHERE item_id = categories.category_id)");
+    //"UPDATE categories c INNER JOIN (SELECT category_id, SUM(item_value) AS category_total FROM items GROUP BY cateogory_id) i ON c.category_id = i.category_id SET c.category_total = i.category_total;"
+  }
 }

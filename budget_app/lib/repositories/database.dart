@@ -15,9 +15,6 @@ class DatabaseConnection {
 
         // db.execute(
         //     "CREATE TABLE categories(category_id INTEGER PRIMARY KEY, category_title TEXT, category_total REAL, category_limit REAL);");
-
-        // db.execute("pragma foreign_keys=on;");
-        // db.execute("DROP TABLE items;");
         // db.execute(
         //     "CREATE TABLE items(item_id INTEGER PRIMARY KEY, category_id INTEGER, item_title TEXT, item_value REAL, item_date TEXT);");
       },

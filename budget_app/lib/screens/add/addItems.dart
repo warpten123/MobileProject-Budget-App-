@@ -1,5 +1,6 @@
 import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
+import 'package:budget_app/services/category_services.dart';
 import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +20,8 @@ class AddItem extends StatefulWidget {
 class _AddItem extends State<AddItem> {
   final _itemInput = TextEditingController(),
       _limitInput = TextEditingController(),
-      _itemService = ItemService();
+      _itemService = ItemService(),
+      _categoryService = CategoryService();
   DateTime _date;
 
   void _datePicked() {
@@ -125,7 +127,7 @@ class _AddItem extends State<AddItem> {
                           );
                         });
                   } else {
-                    var result = await _itemService.saveItems(
+                    await _itemService.saveItems(
                       ItemData(
                         categoryID: widget.categoryChecker.id,
                         itemTitle: _itemInput.text,
@@ -133,6 +135,8 @@ class _AddItem extends State<AddItem> {
                         date: _date,
                       ),
                     );
+                    await _categoryService
+                        .updateCategoryTotal(widget.categoryChecker.id);
                     Navigator.of(context).pop();
                     // widget.item(
                     //     _itemInput.text, double.parse(_limitInput.text), _date);
