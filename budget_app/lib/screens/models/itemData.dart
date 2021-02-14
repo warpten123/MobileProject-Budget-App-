@@ -14,7 +14,6 @@ class ItemData {
   });
 
   Map<String, dynamic> toMap() {
-    print(date.toIso8601String());
     return ({
       'item_id': itemID,
       'category_id': categoryID,

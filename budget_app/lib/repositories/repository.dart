@@ -27,9 +27,15 @@ class Repository {
     return await connection.query(table);
   }
 
-  readItemsByCategoryId(items, categoryId) async {
+  readItemsByCategoryId(items, categoryID) async {
     var connection = await database;
     return await connection
-        .query(items, where: 'category_id=?', whereArgs: [categoryId]);
+        .query(items, where: 'category_id=?', whereArgs: [categoryID]);
+  }
+
+  readCategoryTotal(categoryID) async {
+    var connection = await database;
+    return await connection.rawQuery(
+        "SELECT SUM(item_value) FROM items WHERE category_id = $categoryID");
   }
 }

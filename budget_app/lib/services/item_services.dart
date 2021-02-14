@@ -19,4 +19,8 @@ class ItemService {
   readItemsByCategoryId(int categoryId) async {
     return await _repository.readItemsByCategoryId('items', categoryId);
   }
+
+  returnCategoryTotal(int categoryID) async {
+    return await _repository.readCategoryTotal(categoryID);
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:budget_app/screens/add/addItems.dart';
 import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
+import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
 import 'list/expenseList.dart';
 
@@ -17,11 +18,21 @@ class DisplayCategory extends StatefulWidget {
 }
 
 class _DisplayCategory extends State<DisplayCategory> {
+  ItemService _itemService = ItemService();
+  double _total = 0;
   @override
   initState() {
     super.initState();
-    print(
-        '${widget.itemInfoMaster[0].categoryID}, ${widget.itemInfoMaster[0].date}, ${widget.itemInfoMaster[0].itemID}');
+    _getCategoryTotal();
+  }
+
+  void _getCategoryTotal() async {
+    var total = (await _itemService
+        .returnCategoryTotal(widget.categoryInfo.id))[0]["SUM(item_value)"];
+
+    setState(() {
+      total != null ? _total = total : _total = 0;
+    });
   }
 
   void itemBottomSheet(BuildContext context) {
@@ -114,8 +125,7 @@ class _DisplayCategory extends State<DisplayCategory> {
                     child: TweenAnimationBuilder(
                   tween: Tween(
                       begin: 0.0,
-                      end: widget.categoryInfo.categoryTotal /
-                          widget.categoryInfo.categoryLimit),
+                      end: _total / widget.categoryInfo.categoryLimit),
                   duration: Duration(seconds: 1),
                   builder: (context, value, child) {
                     return Container(
@@ -149,8 +159,7 @@ class _DisplayCategory extends State<DisplayCategory> {
                               child: Center(
                                 child: Text(
                                   "₱ " +
-                                      widget.categoryInfo.categoryTotal
-                                          .toString() +
+                                      _total.toString() +
                                       " / ₱ ${widget.categoryInfo.categoryLimit}",
                                   style: TextStyle(
                                     fontSize: 12.0,
