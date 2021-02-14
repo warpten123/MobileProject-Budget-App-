@@ -4,6 +4,7 @@ import 'package:budget_app/screens/list/categoryList.dart';
 import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
 import 'package:budget_app/services/category_services.dart';
+import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
 
 class Budget extends StatefulWidget {
@@ -18,22 +19,22 @@ class _Budget extends State<Budget> {
   List<ItemData> _userTransactions = [];
   List<CategoryData> _categoryList = [];
   CategoryService _categoryService = CategoryService();
+  ItemService _itemService = ItemService();
 
   @override
   void initState() {
     super.initState();
     getCategories();
+    getItems();
   }
 
   void getCategories() async {
     setState(() {
       _categoryList.clear();
-      _categoryList = [];
     });
     var categories = await _categoryService.readCategories();
     categories.forEach(
       (category) {
-        print(category);
         setState(
           () {
             _categoryList.add(
@@ -41,6 +42,30 @@ class _Budget extends State<Budget> {
                 id: category['category_id'],
                 categoryTitle: category['category_title'],
                 categoryLimit: category['category_limit'],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void getItems() async {
+    setState(() {
+      _userTransactions.clear();
+    });
+    var items = await _itemService.readItems();
+    items.forEach(
+      (item) {
+        setState(
+          () {
+            _userTransactions.add(
+              ItemData(
+                itemID: item['item_id'],
+                itemTitle: item['item_title'],
+                itemValue: item['item_value'],
+                categoryID: item['category_id'],
+                date: DateTime.tryParse(item['item_date']),
               ),
             );
           },
@@ -63,15 +88,6 @@ class _Budget extends State<Budget> {
             ),
           );
         });
-  }
-
-//To be removed
-  void addCategory(String text, double amount) {
-    final CategoryData category = CategoryData(
-        categoryTitle: text, categoryLimit: amount, id: _categoryList.length);
-    setState(() {
-      _categoryList.add(category);
-    });
   }
 
   @override

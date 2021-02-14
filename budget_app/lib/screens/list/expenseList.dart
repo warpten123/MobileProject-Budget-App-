@@ -31,7 +31,7 @@ class _ItemListState extends State<ItemList> {
         });
   }
 
-  void deleteUser(int id) {
+  void deleteItem(int id) {
     setState(() {
       widget.itemList.removeWhere((index) {
         widget.categoryInfo.categoryTotal -= widget.itemList[id].itemValue;
@@ -93,7 +93,7 @@ class _ItemListState extends State<ItemList> {
                               IconButton(
                                 icon: Icon(Icons.delete, color: Colors.red),
                                 onPressed: () =>
-                                    deleteUser(widget.itemList[index].itemID),
+                                    deleteItem(widget.itemList[index].itemID),
                               ),
                             ],
                           ),

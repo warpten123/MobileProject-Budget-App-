@@ -26,4 +26,10 @@ class Repository {
     var connection = await database;
     return await connection.query(table);
   }
+
+  readItemsByCategoryId(items, categoryId) async {
+    var connection = await database;
+    return await connection
+        .query(items, where: 'category_id=?', whereArgs: [categoryId]);
+  }
 }

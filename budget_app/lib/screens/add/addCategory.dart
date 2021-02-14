@@ -85,6 +85,7 @@ class _AddCategory extends State<AddCategory> {
                       ),
                     );
                     widget.refreshList();
+                    Navigator.of(context).pop();
                     // widget.category(
                     //     _categoryInput.text, double.parse(_limitInput.text));
                     // Navigator.of(context).pop();

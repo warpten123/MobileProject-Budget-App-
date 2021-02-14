@@ -18,6 +18,11 @@ class _CategoryListState extends State<CategoryList> {
   }
 
   @override
+  initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return widget.categoryList.isEmpty
         ? Column(
@@ -38,12 +43,15 @@ class _CategoryListState extends State<CategoryList> {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
                           builder: (context) => DisplayCategory(
-                                categoryInfo: widget.categoryList[index],
-                                itemInfoMaster: widget.itemInfo,
-                                notifyParent: refresh,
-                              )));
+                            categoryInfo: widget.categoryList[index],
+                            itemInfoMaster: widget.itemInfo,
+                            notifyParent: refresh,
+                          ),
+                        ),
+                      );
                     },
                     child: Card(
                       elevation: 3,

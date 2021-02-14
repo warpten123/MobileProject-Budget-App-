@@ -17,6 +17,13 @@ class DisplayCategory extends StatefulWidget {
 }
 
 class _DisplayCategory extends State<DisplayCategory> {
+  @override
+  initState() {
+    super.initState();
+    print(
+        '${widget.itemInfoMaster[0].categoryID}, ${widget.itemInfoMaster[0].date}, ${widget.itemInfoMaster[0].itemID}');
+  }
+
   void itemBottomSheet(BuildContext context) {
     showModalBottomSheet(
         isScrollControlled: true,

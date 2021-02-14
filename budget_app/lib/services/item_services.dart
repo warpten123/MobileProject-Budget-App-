@@ -8,7 +8,15 @@ class ItemService {
     _repository = Repository();
   }
 
-  saveCategory(ItemData itemData) async {
-    return await _repository.insertData('item', itemData.toMap());
+  saveItems(ItemData itemData) async {
+    return await _repository.insertData('items', itemData.toMap());
+  }
+
+  readItems() async {
+    return await _repository.readData('items');
+  }
+
+  readItemsByCategoryId(int categoryId) async {
+    return await _repository.readItemsByCategoryId('items', categoryId);
   }
 }
