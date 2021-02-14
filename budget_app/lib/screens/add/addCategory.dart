@@ -1,8 +1,10 @@
+import 'package:budget_app/screens/models/categoryData.dart';
+import 'package:budget_app/services/category_services.dart';
 import 'package:flutter/material.dart';
 
 class AddCategory extends StatefulWidget {
-  AddCategory(this.category);
-  final Function category;
+  AddCategory(this.refreshList);
+  final Function refreshList;
 
   @override
   _AddCategory createState() => _AddCategory();
@@ -10,7 +12,8 @@ class AddCategory extends StatefulWidget {
 
 class _AddCategory extends State<AddCategory> {
   final _categoryInput = TextEditingController(),
-      _limitInput = TextEditingController();
+      _limitInput = TextEditingController(),
+      _categoryService = CategoryService();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +54,7 @@ class _AddCategory extends State<AddCategory> {
                   'Add',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   if (_categoryInput.text.isEmpty || _limitInput.text.isEmpty) {
                     showDialog(
                         context: context,
@@ -75,9 +78,16 @@ class _AddCategory extends State<AddCategory> {
                           );
                         });
                   } else {
-                    widget.category(
-                        _categoryInput.text, double.parse(_limitInput.text));
-                    Navigator.of(context).pop();
+                    await _categoryService.saveCategory(
+                      CategoryData(
+                        categoryTitle: _categoryInput.text,
+                        categoryLimit: double.parse(_limitInput.text),
+                      ),
+                    );
+                    widget.refreshList();
+                    // widget.category(
+                    //     _categoryInput.text, double.parse(_limitInput.text));
+                    // Navigator.of(context).pop();
                   }
                 },
               ),

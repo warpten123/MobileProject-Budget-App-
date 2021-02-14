@@ -3,6 +3,7 @@ import 'package:budget_app/screens/chart.dart';
 import 'package:budget_app/screens/list/categoryList.dart';
 import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
+import 'package:budget_app/services/category_services.dart';
 import 'package:flutter/material.dart';
 
 class Budget extends StatefulWidget {
@@ -15,7 +16,38 @@ class Budget extends StatefulWidget {
 
 class _Budget extends State<Budget> {
   List<ItemData> _userTransactions = [];
-  List<CategoryData> _category = [];
+  List<CategoryData> _categoryList = [];
+  CategoryService _categoryService = CategoryService();
+
+  @override
+  void initState() {
+    super.initState();
+    getCategories();
+  }
+
+  void getCategories() async {
+    setState(() {
+      _categoryList.clear();
+      _categoryList = [];
+    });
+    var categories = await _categoryService.readCategories();
+    categories.forEach(
+      (category) {
+        print(category);
+        setState(
+          () {
+            _categoryList.add(
+              CategoryData(
+                id: category['category_id'],
+                categoryTitle: category['category_title'],
+                categoryLimit: category['category_limit'],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   void categoryBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -26,18 +58,19 @@ class _Budget extends State<Budget> {
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
-              child: AddCategory(addCategory),
+              child: AddCategory(getCategories),
               height: 250,
             ),
           );
         });
   }
 
+//To be removed
   void addCategory(String text, double amount) {
     final CategoryData category = CategoryData(
-        categoryTitle: text, categoryLimit: amount, id: _category.length);
+        categoryTitle: text, categoryLimit: amount, id: _categoryList.length);
     setState(() {
-      _category.add(category);
+      _categoryList.add(category);
     });
   }
 
@@ -64,7 +97,7 @@ class _Budget extends State<Budget> {
         child: Column(
           children: <Widget>[
             ChartList(_userTransactions),
-            CategoryList(_category, _userTransactions),
+            CategoryList(_categoryList, _userTransactions),
           ],
         ),
       ),
