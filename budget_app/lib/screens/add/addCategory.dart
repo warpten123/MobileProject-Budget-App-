@@ -78,14 +78,13 @@ class _AddCategory extends State<AddCategory> {
                           );
                         });
                   } else {
-                    var result = await _categoryService.saveCategory(
+                    await _categoryService.saveCategory(
                       CategoryData(
                         categoryTitle: _categoryInput.text,
                         categoryLimit: double.parse(_limitInput.text),
                       ),
                     );
                     widget.refreshList();
-                    print(result);
                     // widget.category(
                     //     _categoryInput.text, double.parse(_limitInput.text));
                     // Navigator.of(context).pop();

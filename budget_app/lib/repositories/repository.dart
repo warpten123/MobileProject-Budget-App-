@@ -1,5 +1,4 @@
 import 'package:budget_app/repositories/database.dart';
-import 'package:flutter/cupertino.dart';
 import "package:sqflite/sqflite.dart";
 
 class Repository {

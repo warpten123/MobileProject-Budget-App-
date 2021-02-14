@@ -17,24 +17,28 @@ class Budget extends StatefulWidget {
 class _Budget extends State<Budget> {
   List<ItemData> _userTransactions = [];
   List<CategoryData> _categoryList = [];
-  CategoryService _categoryService;
+  CategoryService _categoryService = CategoryService();
 
   @override
   void initState() {
     super.initState();
+    getCategories();
   }
 
   void getCategories() async {
     setState(() {
       _categoryList.clear();
+      _categoryList = [];
     });
     var categories = await _categoryService.readCategories();
     categories.forEach(
       (category) {
+        print(category);
         setState(
           () {
             _categoryList.add(
               CategoryData(
+                id: category['category_id'],
                 categoryTitle: category['category_title'],
                 categoryLimit: category['category_limit'],
               ),
