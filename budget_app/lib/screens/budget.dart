@@ -6,7 +6,6 @@ import 'package:budget_app/screens/models/itemData.dart';
 import 'package:budget_app/services/category_services.dart';
 import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
-import 'package:splashscreen/splashscreen.dart';
 
 class Budget extends StatefulWidget {
   Budget({this.title});
@@ -94,37 +93,29 @@ class _Budget extends State<Budget> {
 
   @override
   Widget build(BuildContext context) {
-    return SplashScreen(
-      seconds: 5,
-      backgroundColor: Colors.white,
-      image: Image.network(
-          'https://i.pinimg.com/originals/2b/77/7a/2b777a13d2df20a20342e24b1fef7ff7.gif'),
-      loaderColor: Colors.white,
-      photoSize: 150.0,
-      navigateAfterSeconds: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => categoryBottomSheet(context),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => categoryBottomSheet(context),
+      ),
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style: Theme.of(context).textTheme.headline4,
         ),
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: Theme.of(context).textTheme.headline4,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => categoryBottomSheet(context),
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => categoryBottomSheet(context),
-            ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ChartList(_userTransactions),
+            CategoryList(_categoryList, _userTransactions),
           ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              ChartList(_userTransactions),
-              CategoryList(_categoryList, _userTransactions),
-            ],
-          ),
         ),
       ),
     );
