@@ -84,7 +84,7 @@ class _ItemListState extends State<ItemList> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: IconButton(
-                                  icon: Icon(Icons.build_circle,
+                                  icon: Icon(Icons.build,
                                       color: Colors.blue),
                                   onPressed: () =>
                                       itemBottomSheet(context, index),
