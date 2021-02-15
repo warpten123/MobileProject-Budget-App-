@@ -81,9 +81,37 @@ class ChartList extends StatefulWidget {
 class _ChartList extends State<ChartList> {
   DateTime now = new DateTime.now();
 
+  int weekDate(String day) {
+    int n = 0;
+    switch (day) {
+      case 'Monday':
+        return n - 1;
+        break;
+      case 'Tuesday':
+        return n - 2;
+        break;
+      case 'Wednesday':
+        return n - 3;
+        break;
+      case 'Thursday':
+        return n - 4;
+        break;
+      case 'Friday':
+        return n - 5;
+        break;
+      case 'Saturday':
+        return n - 6;
+        break;
+    }
+    return n;
+  }
+
   List<Map<String, Object>> get daysList {
     return List.generate(7, (count) {
-      DateTime days = DateTime.now().subtract(Duration(days: count));
+      String day = DateFormat('EEEE').format(DateTime.now());
+      DateTime days =
+          DateTime.now().add(Duration(days: count - weekDate(day) - 2));
+      // DateTime days = DateTime.now().subtract(Duration(days: count));
       double total = 0.0;
 
       for (int counter = 0;
@@ -100,7 +128,7 @@ class _ChartList extends State<ChartList> {
         'day': DateFormat.E().format(days),
         'amount': total,
       };
-    }).reversed.toList();
+    }).toList();
   }
 
   double get expense {
