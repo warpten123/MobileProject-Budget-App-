@@ -139,7 +139,7 @@ class _ChartList extends State<ChartList> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime week = now.subtract(Duration(days: 7));
+    DateTime week = now.add(Duration(days: 7));
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -164,9 +164,9 @@ class _ChartList extends State<ChartList> {
                   onPressed: () => null,
                 ),
                 Text(
-                  DateFormat.yMMMd().format(week) +
+                  DateFormat.yMMMd().format(now.add(Duration(days: -1))) +
                       ' - ' +
-                      DateFormat.yMMMd().format(now),
+                      DateFormat.yMMMd().format(week),
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 IconButton(
