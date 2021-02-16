@@ -103,6 +103,7 @@ class _Budget extends State<Budget> {
           widget.title,
           style: Theme.of(context).textTheme.headline4,
         ),
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
