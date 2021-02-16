@@ -83,37 +83,10 @@ class ChartList extends StatefulWidget {
 class _ChartList extends State<ChartList> {
   DateTime now = new DateTime.now();
 
-  int weekDayDate(String day) {
-    int n = 0;
-    switch (day) {
-      case 'Monday':
-        return n - 1;
-        break;
-      case 'Tuesday':
-        return n - 2;
-        break;
-      case 'Wednesday':
-        return n - 3;
-        break;
-      case 'Thursday':
-        return n - 4;
-        break;
-      case 'Friday':
-        return n - 5;
-        break;
-      case 'Saturday':
-        return n - 6;
-        break;
-    }
-    return n;
-  }
-
   List<Map<String, Object>> get daysList {
     return List.generate(7, (count) {
-      String day = DateFormat('EEEE').format(DateTime.now());
       DateTime days =
-          DateTime.now().add(Duration(days: count - weekDayDate(day) - 2));
-      // DateTime days = DateTime.now().subtract(Duration(days: count));
+          DateTime.now().add(Duration(days: count - now.weekday));
       double total = 0.0;
 
       for (int counter = 0;
@@ -163,7 +136,7 @@ class _ChartList extends State<ChartList> {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.arrow_back),
-                  onPressed: (){
+                  onPressed: () {
                     setState(() {
                       now = now.subtract(Duration(days: 7));
                       week = week.subtract(Duration(days: 7));
@@ -182,7 +155,7 @@ class _ChartList extends State<ChartList> {
                 ),
                 IconButton(
                   icon: Icon(Icons.arrow_forward),
-                  onPressed: (){
+                  onPressed: () {
                     setState(() {
                       now = now.add(Duration(days: 7));
                       week = week.add(Duration(days: 7));

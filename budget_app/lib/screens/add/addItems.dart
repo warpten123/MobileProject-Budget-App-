@@ -5,6 +5,10 @@ import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../budget.dart';
+import '../displayCategory.dart';
+import '../models/itemData.dart';
+
 class AddItem extends StatefulWidget {
   AddItem(
     this.item,
@@ -137,7 +141,9 @@ class _AddItem extends State<AddItem> {
                     );
                     await _categoryService
                         .updateCategoryTotal(widget.categoryChecker.id);
-                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Budget(title: 'Simple Budget',)
+                    ));
                     // widget.item(
                     //     _itemInput.text, double.parse(_limitInput.text), _date);
                   }

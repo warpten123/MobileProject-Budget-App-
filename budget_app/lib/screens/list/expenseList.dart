@@ -4,6 +4,9 @@ import 'package:budget_app/screens/models/itemData.dart';
 import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
 
+import '../budget.dart';
+import '../displayCategory.dart';
+
 class ItemList extends StatefulWidget {
   ItemList(this.itemList, this.categoryInfo);
   final List<ItemData> itemList;
@@ -55,6 +58,12 @@ class _ItemListState extends State<ItemList> {
         );
       },
     );
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => DisplayCategory(
+        categoryInfo: widget.categoryInfo,
+        itemInfoMaster: widget.itemList,
+      ),
+    ));
   }
 
   @override
