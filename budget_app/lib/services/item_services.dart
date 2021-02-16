@@ -16,6 +16,14 @@ class ItemService {
     return await _repository.readData('items');
   }
 
+  updateItem(ItemData itemData) async {
+    return await _repository.updateItem(itemData.toMap());
+  }
+
+  deleteItem(ItemData itemData) async {
+    return await _repository.deleteItem(itemData.toMap());
+  }
+
   readItemsByCategoryId(int categoryId) async {
     return await _repository.readItemsByCategoryId('items', categoryId);
   }
