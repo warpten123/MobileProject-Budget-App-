@@ -148,9 +148,9 @@ class _ChartList extends State<ChartList> {
                   },
                 ),
                 Text(
-                  DateFormat.yMMMd().format(now.add(Duration(days: -1))) +
+                  DateFormat.yMMMd().format(now.subtract(Duration(days: now.weekday))) +
                       ' - ' +
-                      DateFormat.yMMMd().format(week.add(Duration(days: -2))),
+                      DateFormat.yMMMd().format(week.subtract(Duration(days: week.weekday + 1))),
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 IconButton(
