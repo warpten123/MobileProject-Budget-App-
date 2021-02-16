@@ -82,9 +82,11 @@ class _AddCategory extends State<AddCategory> {
                       CategoryData(
                         categoryTitle: _categoryInput.text,
                         categoryLimit: double.parse(_limitInput.text),
+                        categoryTotal: 0,
                       ),
                     );
                     widget.refreshList();
+                    Navigator.of(context).pop();
                     // widget.category(
                     //     _categoryInput.text, double.parse(_limitInput.text));
                     // Navigator.of(context).pop();

@@ -1,6 +1,7 @@
 import 'package:budget_app/screens/add/edititems.dart';
 import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
+import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
 
 class ItemList extends StatefulWidget {
@@ -12,6 +13,17 @@ class ItemList extends StatefulWidget {
 }
 
 class _ItemListState extends State<ItemList> {
+  ItemService _itemService = ItemService();
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.categoryInfo.categoryTotal);
+    widget.itemList.forEach((element) {
+      print(element.itemID);
+    });
+  }
+
   void itemBottomSheet(BuildContext context, int index) {
     showModalBottomSheet(
         isScrollControlled: true,
@@ -31,13 +43,18 @@ class _ItemListState extends State<ItemList> {
         });
   }
 
-  void deleteUser(int id) {
-    setState(() {
-      widget.itemList.removeWhere((index) {
-        widget.categoryInfo.categoryTotal -= widget.itemList[id].itemValue;
-        return index.itemID == id;
-      });
-    });
+  void deleteItem(int id, int i) {
+    _itemService.deleteItem(widget.itemList[i]);
+    setState(
+      () {
+        widget.itemList.removeWhere(
+          (index) {
+            widget.categoryInfo.categoryTotal -= widget.itemList[i].itemValue;
+            return index.itemID == id;
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -84,16 +101,15 @@ class _ItemListState extends State<ItemList> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: IconButton(
-                                  icon: Icon(Icons.build_circle,
-                                      color: Colors.blue),
+                                  icon: Icon(Icons.build, color: Colors.blue),
                                   onPressed: () =>
                                       itemBottomSheet(context, index),
                                 ),
                               ),
                               IconButton(
                                 icon: Icon(Icons.delete, color: Colors.red),
-                                onPressed: () =>
-                                    deleteUser(widget.itemList[index].itemID),
+                                onPressed: () => deleteItem(
+                                    widget.itemList[index].itemID, index),
                               ),
                             ],
                           ),

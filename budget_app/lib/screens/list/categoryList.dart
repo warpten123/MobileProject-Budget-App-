@@ -1,6 +1,7 @@
 import 'package:budget_app/screens/displayCategory.dart';
 import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
+import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
 
 class CategoryList extends StatefulWidget {
@@ -13,8 +14,26 @@ class CategoryList extends StatefulWidget {
 }
 
 class _CategoryListState extends State<CategoryList> {
+  double _categoryTotal = 0;
+  ItemService _itemService = ItemService();
   refresh() {
     setState(() {});
+  }
+
+  @override
+  initState() {
+    super.initState();
+  }
+
+  void _getCategoryTotal(int categoryID) async {
+    var total = (await _itemService.returnCategoryTotal(categoryID))[0]
+        ["SUM(item_value)"];
+
+    setState(
+      () {
+        total != null ? _categoryTotal = total : _categoryTotal = 0;
+      },
+    );
   }
 
   @override
@@ -38,12 +57,15 @@ class _CategoryListState extends State<CategoryList> {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
                           builder: (context) => DisplayCategory(
-                                categoryInfo: widget.categoryList[index],
-                                itemInfoMaster: widget.itemInfo,
-                                notifyParent: refresh,
-                              )));
+                            categoryInfo: widget.categoryList[index],
+                            itemInfoMaster: widget.itemInfo,
+                            notifyParent: refresh,
+                          ),
+                        ),
+                      );
                     },
                     child: Card(
                       elevation: 3,

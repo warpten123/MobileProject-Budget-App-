@@ -19,7 +19,7 @@ class ItemData {
       'category_id': categoryID,
       'item_title': itemTitle,
       'item_value': itemValue,
-      'item_date': date,
+      'item_date': date.toIso8601String(),
     });
   }
 }

@@ -2,6 +2,8 @@ import 'package:budget_app/screens/models/itemData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'budget.dart';
+
 class BarChartWidget extends StatefulWidget {
   BarChartWidget({this.day, this.amount, this.percentage});
   final String day;
@@ -81,9 +83,37 @@ class ChartList extends StatefulWidget {
 class _ChartList extends State<ChartList> {
   DateTime now = new DateTime.now();
 
+  int weekDayDate(String day) {
+    int n = 0;
+    switch (day) {
+      case 'Monday':
+        return n - 1;
+        break;
+      case 'Tuesday':
+        return n - 2;
+        break;
+      case 'Wednesday':
+        return n - 3;
+        break;
+      case 'Thursday':
+        return n - 4;
+        break;
+      case 'Friday':
+        return n - 5;
+        break;
+      case 'Saturday':
+        return n - 6;
+        break;
+    }
+    return n;
+  }
+
   List<Map<String, Object>> get daysList {
     return List.generate(7, (count) {
-      DateTime days = DateTime.now().subtract(Duration(days: count));
+      String day = DateFormat('EEEE').format(DateTime.now());
+      DateTime days =
+          DateTime.now().add(Duration(days: count - weekDayDate(day) - 2));
+      // DateTime days = DateTime.now().subtract(Duration(days: count));
       double total = 0.0;
 
       for (int counter = 0;
@@ -100,7 +130,7 @@ class _ChartList extends State<ChartList> {
         'day': DateFormat.E().format(days),
         'amount': total,
       };
-    }).reversed.toList();
+    }).toList();
   }
 
   double get expense {
@@ -111,7 +141,7 @@ class _ChartList extends State<ChartList> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime week = now.subtract(Duration(days: 7));
+    DateTime week = now.add(Duration(days: 7));
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -133,17 +163,35 @@ class _ChartList extends State<ChartList> {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.arrow_back),
-                  onPressed: () => null,
+                  onPressed: (){
+                    setState(() {
+                      now = now.subtract(Duration(days: 7));
+                      week = week.subtract(Duration(days: 7));
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => new Budget(),
+                      //   ));
+                    });
+                  },
                 ),
                 Text(
-                  DateFormat.yMMMd().format(week) +
+                  DateFormat.yMMMd().format(now.add(Duration(days: -1))) +
                       ' - ' +
-                      DateFormat.yMMMd().format(now),
+                      DateFormat.yMMMd().format(week.add(Duration(days: -2))),
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 IconButton(
                   icon: Icon(Icons.arrow_forward),
-                  onPressed: () => null,
+                  onPressed: (){
+                    setState(() {
+                      now = now.add(Duration(days: 7));
+                      week = week.add(Duration(days: 7));
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => new ChartList(widget.userTransactions),
+                      //   ));
+                    });
+                  },
                 ),
               ],
             ),

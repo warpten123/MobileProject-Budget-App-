@@ -1,5 +1,6 @@
 import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
+import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -19,6 +20,7 @@ class _EditItem extends State<EditItem> {
   final _itemInput = TextEditingController(),
       _limitInput = TextEditingController();
   DateTime _date;
+  ItemService _itemService = ItemService();
 
   void _datePicked() {
     showDatePicker(
@@ -107,7 +109,12 @@ class _EditItem extends State<EditItem> {
                     }
                     widget.itemEdit.itemTitle = _itemInput.text;
                     widget.itemEdit.itemValue = storeValue();
-                    widget.itemEdit.date = _date;
+                    _itemService.updateItem(widget.itemEdit);
+                    if (_date == null) {
+                      widget.itemEdit.date = widget.itemEdit.date;
+                    } else {
+                      widget.itemEdit.date = _date;
+                    }
                     Navigator.of(context).pop();
                   }),
             ),
