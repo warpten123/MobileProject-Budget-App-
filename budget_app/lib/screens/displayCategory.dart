@@ -3,6 +3,7 @@ import 'package:budget_app/screens/models/categoryData.dart';
 import 'package:budget_app/screens/models/itemData.dart';
 import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
+import 'budget.dart';
 import 'list/expenseList.dart';
 
 const TWO_PI = 3.14 * 2;
@@ -88,6 +89,17 @@ class _DisplayCategory extends State<DisplayCategory> {
         title: Text(
           widget.categoryInfo.categoryTitle,
           style: Theme.of(context).textTheme.headline4,
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => Budget(title: 'Simple Budget'),
+            ),
+          ),
         ),
         actions: <Widget>[
           IconButton(
