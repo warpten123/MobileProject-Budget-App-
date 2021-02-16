@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../budget.dart';
-import '../displayCategory.dart';
 import '../models/itemData.dart';
 
 class AddItem extends StatefulWidget {

@@ -4,6 +4,9 @@ import 'package:budget_app/services/item_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../budget.dart';
+import '../displayCategory.dart';
+
 class EditItem extends StatefulWidget {
   EditItem(
     this.categoryChecker,
@@ -115,7 +118,9 @@ class _EditItem extends State<EditItem> {
                     } else {
                       widget.itemEdit.date = _date;
                     }
-                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Budget(title: 'Simple Budget'),
+                    ));
                   }),
             ),
           ],
