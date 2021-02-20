@@ -85,16 +85,26 @@ class _ChartList extends State<ChartList> {
 
   List<Map<String, Object>> get daysList {
     return List.generate(7, (count) {
-      DateTime days =
-          DateTime.now().add(Duration(days: count - now.weekday));
+      DateTime days = DateTime.now().add(Duration(days: count - now.weekday));
       double total = 0.0;
-
       for (int counter = 0;
           counter < widget.userTransactions.length;
           counter++) {
         if (days.year == widget.userTransactions[counter].date.year &&
             days.month == widget.userTransactions[counter].date.month &&
             days.day == widget.userTransactions[counter].date.day) {
+        
+        //compare of dates
+          // if (widget.userTransactions[counter].date
+          //         .isBefore(now.subtract(Duration(days: 7))) &&
+          //     widget.userTransactions[counter].date
+          //         .isAfter(now.add(Duration(days: 7))) &&
+          //     widget.userTransactions[counter].date
+          //         .isAtSameMomentAs(now) &&
+          //     widget.userTransactions[counter].date
+          //         .isAtSameMomentAs(now.add(Duration(days: 7)))) {
+          // }
+
           total += widget.userTransactions[counter].itemValue;
         }
       }
@@ -148,9 +158,11 @@ class _ChartList extends State<ChartList> {
                   },
                 ),
                 Text(
-                  DateFormat.yMMMd().format(now.subtract(Duration(days: now.weekday))) +
+                  DateFormat.yMMMd()
+                          .format(now.subtract(Duration(days: now.weekday))) +
                       ' - ' +
-                      DateFormat.yMMMd().format(week.subtract(Duration(days: week.weekday + 1))),
+                      DateFormat.yMMMd().format(
+                          week.subtract(Duration(days: week.weekday + 1))),
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 IconButton(
